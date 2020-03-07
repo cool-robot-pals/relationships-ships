@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap");
+
 :root {
 	--bg: #fff;
 }
@@ -8,7 +10,7 @@
 }
 
 body {
-	font-family: "helv";
+	font-family: "IBM Plex Sans";
 	color: var(--red);
 	background: #fff url(./klance.png);
 	background-size: cover;
@@ -30,4 +32,14 @@ x-ship {
 	max-height: 200px;
 	overflow: hidden;
 	padding: 1em;
+	line-height: 1.2;
+}
+
+x-ship h2 {
+	font-weight: 500;
+	margin-bottom: 1em;
+}
+
+x-ship p {
+	font-weight: 300;
 }

@@ -1,4 +1,4 @@
-import { getGenders, Gender } from "./gender";
+import { getGenders, Gender } from './gender';
 
 interface Post {
 	selftext: string;
@@ -8,10 +8,10 @@ interface Post {
 
 export const parse = (posts: any[]): Post[] => {
 	return posts
-		.map(t => ({
+		.map((t) => ({
 			selftext: t.selftext,
 			title: t.title,
-			genders: getGenders(t.title)
+			genders: getGenders(t.title),
 		}))
 		.filter(({ genders }) => genders.length >= 2);
 };

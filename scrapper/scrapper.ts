@@ -1,31 +1,31 @@
-require("dotenv").config();
-const fs = require("fs");
-const snoowrap = require("snoowrap");
+require('dotenv').config();
+const fs = require('fs');
+const snoowrap = require('snoowrap');
 
 const r = new snoowrap({
-	userAgent: "put your user-agent string here",
+	userAgent: 'put your user-agent string here',
 	clientId: process.env.REDDIT_APP,
 	clientSecret: process.env.REDDIT_SECRET,
-	refreshToken: process.env.REDDIT_RT
+	refreshToken: process.env.REDDIT_RT,
 });
 
 const retrieve = async () => {
 	const controversials = await r
-		.getSubreddit("relationships")
+		.getSubreddit('relationships')
 		.getControversial({
-			time: "week",
-			count: 100
+			time: 'week',
+			count: 100,
 		});
-	fs.writeFileSync("controversials.json", JSON.stringify(controversials));
+	fs.writeFileSync('controversials.json', JSON.stringify(controversials));
 };
 
 enum Gender {
-	Boy = "Boy",
-	Girl = "Girl"
+	Boy = 'Boy',
+	Girl = 'Girl',
 }
 
 const normalizeGender = (str: string) => {
-	if (str.toLowerCase() === "f") {
+	if (str.toLowerCase() === 'f') {
 		return Gender.Girl;
 	}
 	return Gender.Boy;
@@ -47,24 +47,24 @@ const getGenders = (str): Gender[] => {
 };
 
 const benders = [
-	["she", "he"],
-	["her", "his"],
-	["mother", "father"],
-	["sister", "brother"],
-	["gf", "bf"],
-	["gfs", "bfs"],
-	["woman", "man"],
-	["sister", "brother"],
-	["girlfriend", "boyfriend"],
-	["girl", "boy"],
-	["herself", "himself"],
-	["wife", "husband"]
+	['she', 'he'],
+	['her', 'his'],
+	['mother', 'father'],
+	['sister', 'brother'],
+	['gf', 'bf'],
+	['gfs', 'bfs'],
+	['woman', 'man'],
+	['sister', 'brother'],
+	['girlfriend', 'boyfriend'],
+	['girl', 'boy'],
+	['herself', 'himself'],
+	['wife', 'husband'],
 ];
 
 const bend = (str: string, to = Gender.Girl) => {
 	//replace gend labels
 	str = str.replace(GENDER_REGEX, (original, match) => {
-		let replacement = to === Gender.Boy ? "M" : "F";
+		let replacement = to === Gender.Boy ? 'M' : 'F';
 		if (match === match.toUpperCase()) {
 			replacement = replacement.toUpperCase();
 		}
@@ -75,20 +75,20 @@ const bend = (str: string, to = Gender.Girl) => {
 	for (let [girl, boy] of benders) {
 		const search = to === Gender.Boy ? girl : boy;
 		const replacement = to === Gender.Girl ? girl : boy;
-		const regex = new RegExp(`\\W(${search})\\W`, "gi");
+		const regex = new RegExp(`\\W(${search})\\W`, 'gi');
 
 		str = str.replace(regex, (original, match) => {
-			const splat = match.split("");
-			const caps = splat.map(l => l === l.toUpperCase());
-			const isMostlyCaps = caps.filter(r => r).length > splat.length / 2;
+			const splat = match.split('');
+			const caps = splat.map((l) => l === l.toUpperCase());
+			const isMostlyCaps = caps.filter((r) => r).length > splat.length / 2;
 			let thisReplacement = replacement;
 			if (isMostlyCaps) {
 				thisReplacement = thisReplacement.toUpperCase();
 			} else {
 				thisReplacement = thisReplacement
-					.split("")
+					.split('')
 					.map((l, i) => (caps[i] ? l.toUpperCase() : l))
-					.join("");
+					.join('');
 			}
 
 			return original.replace(match, thisReplacement);
@@ -106,16 +106,16 @@ interface Post {
 const bendPost = (post: Post, to: Gender) => ({
 	...post,
 	selftext: bend(post.selftext, to),
-	title: bend(post.title, to)
+	title: bend(post.title, to),
 });
 
 const getPosts = (): Post[] => {
-	const data = require("./controversials.json");
+	const data = require('./controversials.json');
 	const posts = data
-		.map(t => ({
+		.map((t) => ({
 			selftext: t.selftext,
 			title: t.title,
-			genders: getGenders(t.title)
+			genders: getGenders(t.title),
 		}))
 		.filter(({ genders }) => genders.length >= 2);
 	return posts;

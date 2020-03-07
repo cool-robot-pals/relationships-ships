@@ -6,8 +6,8 @@ interface Post {
 	genders: Gender[];
 }
 
-export const parse = (posts: any[]): Post[] => {
-	return posts
+export const parse = (posts: {}): Post[] => {
+	return Object.values<any>(posts)
 		.map((t) => ({
 			selftext: t.selftext,
 			title: t.title,

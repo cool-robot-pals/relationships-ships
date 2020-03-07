@@ -2,6 +2,7 @@
 	"name": "red-hot-chilli-fanta",
 	"version": "1.0.0",
 	"description": "",
+	"engine": "12",
 	"main": "app.js",
 	"dependencies": {
 		"chalk": "^2.4.1",

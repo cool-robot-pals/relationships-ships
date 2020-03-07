@@ -7,11 +7,13 @@ const benders = [
 	['she', 'he'],
 	['her', 'his'],
 	['mother', 'father'],
+	['mom', 'dad'],
 	['sister', 'brother'],
 	['gf', 'bf'],
 	['gfs', 'bfs'],
 	['woman', 'man'],
 	['girlfriend', 'boyfriend'],
+	['girl', 'boy'],
 	['herself', 'himself'],
 	['wife', 'husband'],
 ];
@@ -48,9 +50,9 @@ export const bendStr = (str: string, to = Gender.Girl) => {
 	// replace it all
 	for (let [girl, boy] of benders) {
 		const [search, replacement] = to === Gender.Boy ? [girl, boy] : [boy, girl];
-		const regex = new RegExp(`\\W(${search})\\W`, 'gi');
+		const regex = new RegExp(`(^|\\W)(${search})($|\\W)`, 'gi');
 
-		str = str.replace(regex, (original, match) => {
+		str = str.replace(regex, (original, _, match) => {
 			const splat = match.split('');
 			const caps = splat.map((l) => l === l.toUpperCase());
 			const isMostlyCaps = caps.filter((r) => r).length > splat.length / 2;

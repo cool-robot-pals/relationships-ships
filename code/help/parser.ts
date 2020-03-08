@@ -1,5 +1,5 @@
 import { getGenders } from './gender';
-import { Post } from '../t/types';
+import { Post } from './types';
 
 export const parse = (posts: {}): Post[] => {
 	return Object.values<any>(posts)

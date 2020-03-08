@@ -1,6 +1,6 @@
 import { parse } from './help/parser';
 import { bend } from './help/gender';
-import { Post, Ship, Gender } from './t/types';
+import { Post, Ship, Gender } from './help/types';
 import ships from '../assets/ships';
 
 const data = require('../data/controversials.json');
@@ -70,10 +70,6 @@ const makePlayer = ({ ship }: Data) => {
 				},
 			});
 		};
-
-		const $tag = document.createElement('script');
-		$tag.src = 'https://www.youtube.com/iframe_api';
-		document.body.appendChild($tag);
 	});
 };
 

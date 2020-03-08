@@ -1,5 +1,5 @@
-import { Gender, Post } from '../t/types';
-import pluralize from 'pluralize';
+import { Gender, Post } from './types';
+const pluralize = require('pluralize');
 
 const benders = [
 	['she', 'he'],

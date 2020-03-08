@@ -1,4 +1,4 @@
-import { Ship, Gender } from './../code/t/types';
+import { Ship, Gender } from '../code/help/types';
 
 const ships: Ship[] = [
 	{

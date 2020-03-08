@@ -1,22 +1,24 @@
-export enum Gender {
-	Boy = 'Boy',
-	Girl = 'Girl',
-}
+import { Gender, Post } from '../t/types';
+import pluralize from 'pluralize';
 
 const benders = [
 	['she', 'he'],
 	['her', 'his'],
+	['hers', 'him'],
 	['mother', 'father'],
 	['mom', 'dad'],
 	['sister', 'brother'],
 	['gf', 'bf'],
-	['gfs', 'bfs'],
 	['woman', 'man'],
 	['girlfriend', 'boyfriend'],
+	['female', 'male'],
 	['girl', 'boy'],
+	['girl', 'guy'],
 	['herself', 'himself'],
 	['wife', 'husband'],
-];
+]
+	.map((bend) => [bend, bend.map((b) => pluralize(b))])
+	.flat();
 
 const GENDER_REGEX = /\W[0-9]+\W?s?([a-zA-Z])\W/g;
 
@@ -73,7 +75,7 @@ export const bendStr = (str: string, to = Gender.Girl) => {
 	return str;
 };
 
-export const bend = (post: Post, to: Gender) => ({
+export const bend = (post: Post, to: Gender): Post => ({
 	...post,
 	selftext: bendStr(post.selftext, to),
 	title: bendStr(post.title, to),

@@ -1,10 +1,5 @@
-import { getGenders, Gender } from './gender';
-
-interface Post {
-	selftext: string;
-	title: string;
-	genders: Gender[];
-}
+import { getGenders } from './gender';
+import { Post } from '../t/types';
 
 export const parse = (posts: {}): Post[] => {
 	return Object.values<any>(posts)

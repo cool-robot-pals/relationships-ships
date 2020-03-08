@@ -1,8 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap");
-
-:root {
-	--bg: #fff;
-}
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap');
 
 * {
 	margin: 0;
@@ -10,29 +6,36 @@
 }
 
 body {
-	font-family: "IBM Plex Sans";
-	color: var(--red);
-	background: #fff url(./klance.png);
+	font-family: 'IBM Plex Sans';
 	background-size: cover;
-	width: 1280px;
-	height: 720px;
-	display: flex;
-	align-items: flex-end;
-	justify-content: center;
+	width: var(--width);
+	height: var(--height);
 	position: absolute;
-	flex-direction: column;
-	box-sizing: border-box;
-	padding: 4em;
 	-webkit-font-smoothing: antialiased;
 }
 
+iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 9;
+	top: calc(var(--videooffset) * -1);
+}
+
 x-ship {
-	background: var(--bg);
-	max-width: 40%;
-	max-height: 200px;
+	width: var(--boxwidth);
+	height: var(--boxheight);
+	top: var(--boxtop);
+	left: var(--boxleft);
 	overflow: hidden;
 	padding: 1em;
 	line-height: 1.2;
+	z-index: 10;
+	font-size: 1.2em;
+	position: absolute;
+	background: #fff;
 }
 
 x-ship h2 {

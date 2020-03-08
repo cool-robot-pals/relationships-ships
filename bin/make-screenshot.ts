@@ -3,7 +3,7 @@ import config from '../.fantarc';
 const Bundler = require('parcel-bundler');
 const puppeteer = require('puppeteer');
 
-const { screenies } = config.paths;
+const { videoCapture } = config.paths;
 
 const startServer = () =>
 	new Promise((rt) => {
@@ -13,6 +13,8 @@ const startServer = () =>
 		});
 		bundler.serve(config.ports.test);
 	});
+
+const TAKE_SO_MANY_SCREENS = 10;
 
 const takeScreenshot = async (url) => {
 	const browser = await puppeteer.launch({
@@ -29,10 +31,12 @@ const takeScreenshot = async (url) => {
 					throw new Error('invalid fanta');
 				}
 				if (log.type === Snaps.Video && log.state === 'ready') {
-					for await (let key of new Array(6).fill('').map((_, i) => i)) {
-						console.log(`Screenshot ${key + 1}/6`);
-						await page.screenshot({ path: screenies(key), type: 'png' });
-						await page.waitFor(750);
+					for await (let key of new Array(TAKE_SO_MANY_SCREENS)
+						.fill('')
+						.map((_, i) => i)) {
+						console.log(`Screenshot ${key + 1}/${TAKE_SO_MANY_SCREENS}`);
+						await page.screenshot({ path: videoCapture(key), type: 'png' });
+						await page.waitFor(300);
 						console.log(`...done`);
 					}
 				}

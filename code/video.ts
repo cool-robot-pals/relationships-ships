@@ -47,7 +47,7 @@ const makePlayer = (ship: Ship) => {
 						seekedTo = true;
 						const duration = player.getDuration();
 						player.seekTo(
-							duration * 0.1 + (duration / 0.8) * Math.random() - 1
+							duration * 0.2 + (duration / 0.65) * Math.random() - 1
 						);
 					},
 					onStateChange: (event) => {

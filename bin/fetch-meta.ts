@@ -2,7 +2,7 @@ import rs from '../.fantarc';
 import ships from '../assets/ships';
 import { bend } from '../code/help/gender';
 import { parse } from '../code/help/parser';
-import { Post, Ship, Meta } from '../code/help/types';
+import { Meta } from '../code/help/types';
 
 const fs = require('fs');
 const data = require('../data/controversials.json');

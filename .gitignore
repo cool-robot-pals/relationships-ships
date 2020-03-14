@@ -7,3 +7,4 @@ dist/*
 .glitch-assets
 .vscode
 .cache
+.DS_Store

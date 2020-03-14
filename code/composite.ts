@@ -2,9 +2,14 @@ import { injectCSS } from './help/css-vars';
 import { Box, Meta, PhotoMeta, Post, Ship, Snaps } from './help/types';
 import { log } from './help/logger';
 
-const allImages = require('../dest/videocapture-*.png');
-const meta = require('../dest/meta.json') as Meta;
-const photoMeta = require('../dest/photo-meta.json') as PhotoMeta;
+const allImages, meta, photoMeta;
+try {
+	allImages = require('../dest/videocapture-*.png');
+	meta = require('../dest/meta.json') as Meta;
+	photoMeta = require('../dest/photo-meta.json') as PhotoMeta;
+} catch (e) {
+	console.error('missing data!!!');
+}
 
 interface Data {
 	post: Post;

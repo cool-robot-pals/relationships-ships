@@ -25,6 +25,7 @@
 		"typescript": "^3.8.3"
 	},
 	"scripts": {
+		"postinstall": "npm i -g ts-node typescript",
 		"test": "jest",
 		"start": "parcel code/index.html",
 		"tweet": "node ./bin/tweet.js",

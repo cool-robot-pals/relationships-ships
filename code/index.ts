@@ -1,16 +1,17 @@
 import { routes } from './help/routes';
 
-let usedRoute = false;
+let getRoute: Promise<any> = null;
 Object.entries(routes).forEach(([route, callback]) => {
 	if (document.location.search.includes(route)) {
 		console.log('using route: ' + route);
-		usedRoute = true;
-		callback();
+		getRoute = callback();
 	}
 });
 
-if (!usedRoute) {
+if (!getRoute) {
 	const [useName, useCb] = Object.entries(routes).shift();
 	console.log('using default route: ' + useName);
-	useCb();
+	getRoute = useCb();
 }
+
+getRoute.then((r) => r());

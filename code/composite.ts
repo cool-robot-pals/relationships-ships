@@ -1,5 +1,6 @@
 import { injectCSS } from './help/css-vars';
-import { Box, Meta, PhotoMeta, Post, Ship } from './help/types';
+import { Box, Meta, PhotoMeta, Post, Ship, Snaps } from './help/types';
+import { log } from './help/logger';
 
 const allImages = require('../dest/videocapture-*.png');
 const meta = require('../dest/meta.json') as Meta;
@@ -140,7 +141,10 @@ const go = async () => {
 	const $root = document.querySelector('x-ship');
 	const data = buildUpFanta($root, meta);
 	declareCSSVars(photoMeta);
-	console.log(JSON.stringify(data));
+	log({
+		type: Snaps.Composite,
+		state: 'ready',
+	});
 };
 
 export default go;

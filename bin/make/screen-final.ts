@@ -11,6 +11,7 @@ const takeScreenshot = async (url) => {
 	const rt = logOngoing('Waiting for screen');
 	return openPage(url, async (log, page) => {
 		if (log.type === Snaps.Composite && log.state === 'ready') {
+			await page.waitFor(250);
 			await page.screenshot({ path: screenie, type: 'png' });
 			rt();
 			return true;

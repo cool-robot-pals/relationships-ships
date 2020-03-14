@@ -28,12 +28,9 @@ const retrieve = async () => {
 		}),
 	]);
 
-	const asObject = {
-		...existing,
-		...Object.fromEntries(
-			[...top, ...controversials].map((post) => [post.id, post])
-		),
-	};
+	const asObject = Object.fromEntries(
+		[...top, ...controversials].map((post) => [post.id, post])
+	);
 
 	fs.writeFileSync(
 		__dirname + '/../data/controversials.json',

@@ -24,7 +24,17 @@ iframe {
 	top: calc(var(--videooffset) * -1);
 }
 
+x-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: var(--bg);
+}
+
 x-ship {
+	box-sizing: border-box;
 	width: var(--boxwidth);
 	height: var(--boxheight);
 	top: var(--boxtop);
@@ -45,4 +55,11 @@ x-ship h2 {
 
 x-ship p {
 	font-weight: 300;
+}
+
+x-preview {
+	background: tomato;
+	opacity: 0.5;
+	position: absolute;
+	border-radius: 100%;
 }

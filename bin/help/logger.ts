@@ -2,7 +2,9 @@ const chalk = require('chalk');
 
 export enum Realm {
 	Tensor = 'TensorFlow',
+	Meta = 'Post meta',
 	VideoShot = 'Video snaps',
+	CompositeShot = 'Composite snap',
 }
 
 interface Options {
@@ -36,8 +38,22 @@ const logOngoing = (realm: Realm, msg: string) => {
 	};
 };
 
+const logCounter = (realm: Realm, msg: string, to: number) => {
+	let count = 0;
+	return [
+		() => {
+			count++;
+			log(realm, msg + ` (${count}/${to})`);
+		},
+		() => {
+			log(realm, msg + ` (${count}/${to})`);
+		},
+	];
+};
+
 export const buildLogger = (realm: Realm) => ({
 	log: (msg: string) => log(realm, msg),
 	logError: (msg: string) => logError(realm, msg),
 	logOngoing: (msg: string) => logOngoing(realm, msg),
+	logCounter: (msg: string, to: number) => logCounter(realm, msg, to),
 });

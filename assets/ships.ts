@@ -3,8 +3,13 @@ import { Ship, Gender } from '../code/help/types';
 const ships: Ship[] = [
 	{
 		name: 'klance',
-		vids: ['fM23Ybi1Zfw', 'b9NQOgV1uO4'],
+		vids: ['6_6MlPlMUBE', 'fM23Ybi1Zfw', 'b9NQOgV1uO4'],
 		bend: Gender.Boy,
+	},
+	{
+		name: 'chloeprice',
+		vids: ['4mwwh-xYWnI'],
+		bend: Gender.Girl,
 	},
 	{
 		name: 'korrasami',

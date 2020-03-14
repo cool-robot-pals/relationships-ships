@@ -3,9 +3,22 @@ export enum Gender {
 	Girl = 'Girl',
 }
 
+export interface Box {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+}
+
 export interface Meta {
 	post: Post;
 	ship: Ship;
+}
+
+export interface PhotoMeta {
+	score: number;
+	box: Box;
+	path: string;
 }
 
 export enum Snaps {

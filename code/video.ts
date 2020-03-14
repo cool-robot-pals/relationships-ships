@@ -22,8 +22,7 @@ const makePlayer = (ship: Ship) => {
 	const $tag = document.createElement('script');
 
 	$tag.src = 'https://www.youtube.com/iframe_api';
-	let firstScriptTag = document.getElementsByTagName('script')[0];
-	firstScriptTag.parentNode.insertBefore($tag, firstScriptTag);
+	document.body.appendChild($tag);
 
 	return new Promise((yay) => {
 		window.onYouTubeIframeAPIReady = () => {
@@ -31,12 +30,12 @@ const makePlayer = (ship: Ship) => {
 				videoId: randomArrKey(ship.vids),
 				width: VIDEO_WIDTH,
 				height: VIDEO_HEIGHT + VIDEO_V_OFFSET * 2,
-				enablejsapi: 1,
+				origin: window.location.href,
 				playerVars: {
+					enablejsapi: 1,
 					controls: 0,
 					modestbranding: 1,
 					mute: 1,
-					origin: window.location.href,
 					rel: 0,
 					showinfo: 0,
 					autoplay: 0,
@@ -44,17 +43,19 @@ const makePlayer = (ship: Ship) => {
 				},
 				events: {
 					onReady: () => {
-						seekedTo = true;
-						const duration = player.getDuration();
-						player.seekTo(
-							duration * 0.2 + (duration / 0.65) * Math.random() - 1
-						);
+						player.playVideo();
 					},
 					onStateChange: (event) => {
-						if (seekedTo && event.data == window.YT.PlayerState.PLAYING) {
-							setTimeout(() => {
-								yay();
-							}, 100);
+						if (event.data == window.YT.PlayerState.PLAYING) {
+							if (seekedTo) {
+								setTimeout(() => {
+									yay();
+								}, 100);
+							} else {
+								seekedTo = true;
+								const duration = player.getDuration();
+								player.seekTo(duration * 0.2 + duration * 0.65 * Math.random());
+							}
 						}
 					},
 				},
@@ -72,13 +73,13 @@ const declareCSSVars = () => {
 };
 
 const go = async () => {
+	document.body.innerHTML = '<div id="player"></div>';
 	declareCSSVars();
-	setTimeout(() => {
-		log({
-			type: Snaps.Video,
-			state: 'ready',
-		});
-	}, 1000);
 	await makePlayer(data.ship);
+	log({
+		type: Snaps.Video,
+		state: 'ready',
+	});
 };
-go();
+
+export default go;

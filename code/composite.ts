@@ -1,20 +1,16 @@
-import { parse } from './help/parser';
-import { bend } from './help/gender';
-import { Post, Ship, Gender } from './help/types';
-import ships from '../assets/ships';
+import { injectCSS } from './help/css-vars';
+import { Box, Meta, PhotoMeta, Post, Ship } from './help/types';
 
-const data = require('../data/controversials.json');
-const posts = parse(data);
+const allImages = require('../dest/videocapture-*.png');
+const meta = require('../dest/meta.json') as Meta;
+const photoMeta = require('../dest/photo-meta.json') as PhotoMeta;
 
 interface Data {
 	post: Post;
 	ship: Ship;
 }
 
-const [VIDEO_WIDTH, VIDEO_HEIGHT, VIDEO_V_OFFSET] = [1280, 720, 120];
-
-const randomArrKey = <T>(items: T[]): T =>
-	items[Math.floor(Math.random() * items.length)];
+const [VIDEO_WIDTH, VIDEO_HEIGHT] = [1280, 720];
 
 const buildUpFanta = ($root, { post }: Data) => {
 	$root.innerHTML = `<h2>${post.title}</h2><p>${post.selftext}</p>`;
@@ -24,61 +20,88 @@ const buildUpFanta = ($root, { post }: Data) => {
 	return { tweet };
 };
 
-declare global {
-	interface Window {
-		onYouTubeIframeAPIReady: any;
-		YT: any;
-	}
-}
-
-const makePlayer = ({ ship }: Data) => {
-	let player;
-	let seekedTo = false;
-
-	return new Promise((yay) => {
-		window.onYouTubeIframeAPIReady = () => {
-			player = new window.YT.Player('player', {
-				videoId: randomArrKey(ship.vids),
-				width: VIDEO_WIDTH,
-				height: VIDEO_HEIGHT + VIDEO_V_OFFSET * 2,
-				enablejsapi: 1,
-				playerVars: {
-					controls: 0,
-					modestbranding: 1,
-					mute: 1,
-					origin: window.location.href,
-					rel: 0,
-					showinfo: 0,
-					autoplay: 0,
-					cc_load_policy: 0,
-				},
-				events: {
-					onReady: () => {
-						seekedTo = true;
-						const duration = player.getDuration();
-						player.seekTo(
-							duration * 0.1 + (duration / 0.8) * Math.random() - 1
-						);
-					},
-					onStateChange: (event) => {
-						if (seekedTo && event.data == window.YT.PlayerState.PLAYING) {
-							setTimeout(() => {
-								yay();
-							}, 100);
-						}
-					},
-				},
-			});
-		};
-	});
+type MegaBox = Box & {
+	centerx: number;
+	centery: number;
+	radius: number;
 };
 
-const declareCSSVars = () => {
-	const [width, height, videooffset] = [
-		VIDEO_WIDTH,
-		VIDEO_HEIGHT,
-		VIDEO_V_OFFSET,
-	];
+const makeMegaBox = (box: Box): MegaBox => ({
+	...box,
+	centerx: box.width / 2 + box.x,
+	centery: box.height / 2 + box.y,
+	radius: Math.max(box.width, box.height) / 2,
+});
+
+let megaBoxes: { [key: string]: HTMLElement } = {};
+const showMegaBox = (id: string, box: MegaBox) => {
+	let $preview = document.createElement('x-preview');
+	$preview.style.top = box.centery - box.radius + 'px';
+	$preview.style.left = box.centerx - box.radius + 'px';
+	$preview.style.width = box.radius * 2 + 'px';
+	$preview.style.height = box.radius * 2 + 'px';
+	if (megaBoxes[id]) {
+		megaBoxes[id].remove();
+	}
+	document.body.appendChild($preview);
+	megaBoxes[id] = $preview;
+};
+
+enum Location {
+	Left = 'left',
+	Right = 'right',
+	Top = 'top',
+	Bottom = 'bottom',
+}
+const correctBoxOverlap = (target: MegaBox, reference: MegaBox): MegaBox => {
+	const locationx =
+		target.centerx > reference.centerx ? Location.Right : Location.Left;
+	const locationy =
+		target.centery > reference.centery ? Location.Bottom : Location.Top;
+
+	let [x, y] = [target.x, target.y];
+
+	if (locationx === Location.Left) {
+		if (target.centerx + target.radius > reference.centerx - reference.radius) {
+			x = target.x + 10;
+		}
+	}
+	if (locationx === Location.Right) {
+		if (reference.centerx + reference.radius > target.centerx - target.radius) {
+			x = target.x + 10;
+		}
+	}
+	if (locationy === Location.Top) {
+		if (target.centery + target.radius > reference.centery - reference.radius) {
+			y = target.y - 10;
+		}
+	}
+	if (locationy === Location.Bottom) {
+		if (reference.centery + reference.radius > target.centery - target.radius) {
+			y = target.y + 10;
+		}
+	}
+
+	y = Math.min(y, VIDEO_HEIGHT - target.height - 10);
+	y = Math.max(y, 10);
+	x = Math.min(x, VIDEO_WIDTH - target.width - 10);
+	x = Math.max(x, 10);
+
+	return makeMegaBox({ ...target, x, y });
+};
+
+const declareCSSVars = (photoMeta: PhotoMeta) => {
+	const image = Object.values<string>(allImages).find((img) =>
+		img.includes(
+			photoMeta.path
+				.split('/')
+				.pop()
+				.split('.')
+				.shift()
+		)
+	);
+
+	const [width, height] = [VIDEO_WIDTH, VIDEO_HEIGHT];
 	const [boxwidth, boxheight] = [420, 200].map(
 		(val) => val * 0.9 + Math.random() * (val * 0.2)
 	);
@@ -86,33 +109,38 @@ const declareCSSVars = () => {
 		(v) => v * 0.8 * Math.random()
 	);
 
-	const all = {
+	let postBox = makeMegaBox({
+		width: boxwidth,
+		height: boxheight,
+		x: boxleft,
+		y: boxtop,
+	});
+	const faceBox = makeMegaBox(photoMeta.box);
+
+	let i = 0;
+	while (i < 50) {
+		i++;
+		postBox = correctBoxOverlap(postBox, faceBox);
+	}
+	const bg = `url(${image})`;
+
+	injectCSS({
 		width,
 		height,
-		boxheight,
-		boxwidth,
-		boxleft,
-		boxtop,
-		videooffset,
-	};
-	for (let [key, val] of Object.entries(all)) {
-		document.documentElement.style.setProperty(
-			'--' + key,
-			Math.round(val) + 'px'
-		);
-	}
+		boxheight: postBox.height,
+		boxwidth: postBox.width,
+		boxleft: postBox.x,
+		boxtop: postBox.y,
+		bg,
+	});
 };
 
 const go = async () => {
+	document.body.innerHTML = '<x-bg><x-ship></x-ship></x-bg>';
 	const $root = document.querySelector('x-ship');
-	const ship = randomArrKey(ships);
-	let post = randomArrKey(posts);
-	if (ship.bend) {
-		post = bend(post, ship.bend);
-	}
-	const data = buildUpFanta($root, { post, ship });
-	declareCSSVars();
-	await makePlayer({ post, ship });
+	const data = buildUpFanta($root, meta);
+	declareCSSVars(photoMeta);
 	console.log(JSON.stringify(data));
 };
-go();
+
+export default go;

@@ -4,7 +4,7 @@ import * as faceapi from 'face-api.js';
 import Fantarc from '../../.fantarc';
 import { buildLogger, Realm } from '../help/logger';
 import { PhotoMeta } from '../../code/help/types';
-const { logOngoing, logError } = buildLogger(Realm.Tensor);
+const { logOngoing, logError, log } = buildLogger(Realm.Tensor);
 
 const fs = require('fs');
 const randomArrKey = <T>(items: T[]): T =>
@@ -59,6 +59,8 @@ export const getBestPhoto = async (): Promise<PhotoMeta> => {
 			},
 		};
 	}
+
+	log(`${best.path} won`);
 
 	return best as PhotoMeta;
 };

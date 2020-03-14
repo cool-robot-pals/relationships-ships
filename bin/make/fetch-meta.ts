@@ -5,9 +5,8 @@ import { parse } from '../../code/help/parser';
 import { Meta } from '../../code/help/types';
 import { buildLogger, Realm } from '../help/logger';
 const { log, logOngoing } = buildLogger(Realm.Meta);
-
 const fs = require('fs');
-const data = require('../../data/controversials.json');
+const data = require(rs.paths.scrap);
 const posts = parse(data);
 
 const randomArrKey = <T>(items: T[]): T =>

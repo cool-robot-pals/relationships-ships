@@ -18,6 +18,7 @@
 		"pluralize": "^8.0.0",
 		"puppeteer": "^1.20.0",
 		"snoowrap": "^1.21.0",
+		"ts-node": "^8.6.2",
 		"twitter": "^1.7.1"
 	},
 	"devDependencies": {
@@ -26,7 +27,8 @@
 	"scripts": {
 		"test": "jest",
 		"start": "parcel code/index.html",
-		"tweet": "node ./bin/tweet.js"
+		"tweet": "node ./bin/tweet.js",
+		"ts-node": "ts-node"
 	},
 	"repository": {
 		"type": "git",

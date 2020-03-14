@@ -1,6 +1,10 @@
 require('dotenv').config();
-const fs = require('fs');
 const snoowrap = require('snoowrap');
+import rs from '../../.fantarc';
+import { buildLogger, Realm } from '../help/logger';
+const { logOngoing } = buildLogger(Realm.Scrapper);
+
+const fs = require('fs');
 
 const r = new snoowrap({
 	userAgent: 'put your user-agent string here',
@@ -10,13 +14,8 @@ const r = new snoowrap({
 });
 
 const retrieve = async () => {
-	let existing = {};
-	try {
-		existing = require('../data/controversials.json');
-		if (!(existing instanceof Object)) {
-			throw 'no';
-		}
-	} catch {}
+	const rt = logOngoing('Fetching posts');
+
 	const [controversials, top] = await Promise.all([
 		r.getSubreddit('relationships').getControversial({
 			time: 'week',
@@ -32,10 +31,8 @@ const retrieve = async () => {
 		[...top, ...controversials].map((post) => [post.id, post])
 	);
 
-	fs.writeFileSync(
-		__dirname + '/../data/controversials.json',
-		JSON.stringify(asObject)
-	);
+	fs.writeFileSync(rs.paths.scrap, JSON.stringify(asObject));
+	rt(`${Object.keys(asObject).length} posts`);
 };
 
 retrieve();

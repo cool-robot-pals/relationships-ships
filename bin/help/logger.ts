@@ -3,6 +3,7 @@ const chalk = require('chalk');
 export enum Realm {
 	Tensor = 'TensorFlow',
 	Meta = 'Post meta',
+	Scrapper = 'Reddit scrapper',
 	VideoShot = 'Video snaps',
 	CompositeShot = 'Composite snap',
 }
@@ -28,11 +29,14 @@ let queue = [];
 const logOngoing = (realm: Realm, msg: string) => {
 	log(realm, msg);
 	queue.push(msg);
-	return () => {
+	return (donemsg?: string) => {
 		queue.shift();
 		let info = 'done';
 		if (queue.length) {
 			info += ` (${msg})`;
+		}
+		if (donemsg) {
+			info += ` – ${donemsg}`;
 		}
 		log(realm, info, { spaced: true });
 	};

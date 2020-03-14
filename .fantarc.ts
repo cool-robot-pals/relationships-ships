@@ -23,6 +23,7 @@ export default {
 				)
 				.map((item) => path.resolve(dest, item)),
 		screenie: path.resolve(dest, 'screenie.png'),
+		scrap: path.resolve(dest, 'scrap.json'),
 		meta: path.resolve(dest, 'meta.json'),
 		photoMeta: path.resolve(dest, 'photo-meta.json'),
 		dest,

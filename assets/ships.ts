@@ -7,7 +7,12 @@ const ships: Ship[] = [
 		bend: Gender.Boy,
 	},
 	{
-		name: 'chloeprice',
+		name: 'catradora',
+		vids: ['appCJDafcy4'],
+		bend: Gender.Girl,
+	},
+	{
+		name: 'pricefield',
 		vids: ['4mwwh-xYWnI'],
 		bend: Gender.Girl,
 	},

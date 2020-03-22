@@ -8,7 +8,7 @@ const main = async () => {
 	await screenVideo();
 	await findBestImage();
 	await screenFinal();
-	process.exit(1);
+	process.exit(0);
 };
 
 main();

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const snoowrap = require('snoowrap');
-import rs from '../../.fantarc';
-import { buildLogger, Realm } from '../help/logger';
+import rs from '../.fantarc';
+import { buildLogger, Realm } from './help/logger';
 const { logOngoing } = buildLogger(Realm.Scrapper);
 
 const fs = require('fs');

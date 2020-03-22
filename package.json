@@ -30,7 +30,7 @@
 		"test": "jest",
 		"parcel": "parcel parcel/index.html",
 		"scrap": "ts-node ./bin/scrap.ts",
-		"tweet": "ts-node ./bin/make.ts && ts-node ./bin/tweet.ts",
+		"tweet": "ts-node ./bin/make.ts && ts-node ./bin/tweet.ts"
 	},
 	"repository": {
 		"type": "git",

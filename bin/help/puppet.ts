@@ -1,12 +1,12 @@
-import { routes } from './../../code/help/routes';
+import { routes } from '../../help/routes';
 import config from '../../.fantarc';
-import { Logger } from '../../code/help/types';
+import { Logger } from '../../help/types';
 const Bundler = require('parcel-bundler');
 const puppeteer = require('puppeteer');
 
 export const startServer = (route: keyof typeof routes) =>
 	new Promise((rt) => {
-		const bundler = new Bundler(__dirname + '/../../code/index.html', {
+		const bundler = new Bundler(__dirname + '/../../parcel/index.html', {
 			watch: false,
 			logLevel: 1,
 		});

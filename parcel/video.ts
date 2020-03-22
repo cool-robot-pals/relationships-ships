@@ -1,6 +1,6 @@
-import { injectCSS } from './help/css-vars';
-import { log } from './help/logger';
-import { Meta, Ship, Snaps } from './help/types';
+import { injectCSS } from '../help/css-vars';
+import { log } from '../help/logger';
+import { Meta, Ship, Snaps } from '../help/types';
 const data = require('../dest/meta.json') as Meta;
 
 const [VIDEO_WIDTH, VIDEO_HEIGHT, VIDEO_V_OFFSET] = [1280, 720, 120];

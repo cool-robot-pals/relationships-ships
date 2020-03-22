@@ -3,7 +3,7 @@ import * as canvas from 'canvas';
 import * as faceapi from 'face-api.js';
 import Fantarc from '../../.fantarc';
 import { buildLogger, Realm } from '../help/logger';
-import { PhotoMeta } from '../../code/help/types';
+import { PhotoMeta } from '../../help/types';
 const { logOngoing, logError, log } = buildLogger(Realm.Tensor);
 
 const fs = require('fs');

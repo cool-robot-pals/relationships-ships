@@ -1,8 +1,8 @@
 import rs from '../../.fantarc';
 import ships from '../../assets/ships';
-import { bend } from '../../code/help/gender';
-import { parse } from '../../code/help/parser';
-import { Meta } from '../../code/help/types';
+import { bend } from '../../help/gender';
+import { parse } from '../../help/parser';
+import { Meta } from '../../help/types';
 import { buildLogger, Realm } from '../help/logger';
 const { log, logOngoing } = buildLogger(Realm.Meta);
 const fs = require('fs');

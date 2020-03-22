@@ -27,7 +27,7 @@
 	"scripts": {
 		"postinstall": "npm i -g ts-node typescript && ts-node ./bin/scrap/index.ts",
 		"test": "jest",
-		"start": "parcel code/index.html",
+		"parcel": "parcel parcel/index.html",
 		"tweet": "node ./bin/tweet.js",
 		"ts-node": "ts-node"
 	},

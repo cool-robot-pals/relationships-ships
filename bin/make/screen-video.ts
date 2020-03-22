@@ -1,4 +1,4 @@
-import { Logger, Snaps } from '../../code/help/types';
+import { Logger, Snaps } from '../../help/types';
 import config from '../../.fantarc';
 
 const { videoCapture } = config.paths;

@@ -6,6 +6,8 @@ export const parse = (posts: {}): Post[] => {
 		.map((t) => ({
 			selftext: t.selftext,
 			title: t.title,
+			created: t.created,
+			name: t.name,
 			genders: getGenders(t.title),
 		}))
 		.filter(({ genders }) => genders.length >= 2);

@@ -1,4 +1,5 @@
 import { injectCSS } from '../help/css-vars';
+import relativeDate from 'relative-date';
 import { Box, Meta, PhotoMeta, Post, Ship, Snaps } from '../help/types';
 import { log } from '../help/logger';
 
@@ -19,7 +20,15 @@ interface Data {
 const [VIDEO_WIDTH, VIDEO_HEIGHT] = [1280, 720];
 
 const buildUpFanta = ($root, { post }: Data) => {
-	$root.innerHTML = `<h2>${post.title}</h2><p>${post.selftext}</p>`;
+	$root.innerHTML = `
+		<small>
+			<strong>r/relationships</strong>
+			<span>Posted by u/${post.name}</span>
+			<span>${relativeDate(post.created * 1000)}</span>
+		</small>
+		<h2>${post.title}</h2>
+		<p>${post.selftext}</p>
+		`;
 
 	const tweet = [post.title];
 
@@ -108,7 +117,7 @@ const declareCSSVars = (photoMeta: PhotoMeta) => {
 	);
 
 	const [width, height] = [VIDEO_WIDTH, VIDEO_HEIGHT];
-	const [boxwidth, boxheight] = [420, 200].map(
+	const [boxwidth, boxheight] = [420, 240].map(
 		(val) => val * 0.9 + Math.random() * (val * 0.2)
 	);
 	const [boxleft, boxtop] = [width - boxwidth, height - boxheight].map(

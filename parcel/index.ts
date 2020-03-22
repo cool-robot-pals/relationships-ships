@@ -13,7 +13,11 @@ if (!getRoute) {
 	console.log('😩 using default route: ' + useName);
 	console.log('😩 go to a route: ');
 	Object.keys(routes).map((r) => {
-		[document.location.protocol, '/', document.location.host, r].join('/');
+		console.log(
+			[document.location.protocol, '/', document.location.host, '?=', r].join(
+				'/'
+			)
+		);
 	});
 	getRoute = useCb;
 }

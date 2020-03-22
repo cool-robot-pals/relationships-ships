@@ -40,7 +40,7 @@ x-ship {
 	top: var(--boxtop);
 	left: var(--boxleft);
 	overflow: hidden;
-	padding: 1em;
+	padding: 0.5em 0.75em;
 	line-height: 1.2;
 	z-index: 10;
 	font-size: 1.2em;
@@ -51,10 +51,18 @@ x-ship {
 x-ship h2 {
 	font-weight: 500;
 	margin-bottom: 1em;
+	font-size: 1.35em;
 }
 
 x-ship p {
 	font-weight: 300;
+}
+x-ship small {
+	margin-bottom: 0.5em;
+	display: block;
+}
+x-ship small > *:not(:first-child):before {
+	content: ' · ';
 }
 
 x-preview {

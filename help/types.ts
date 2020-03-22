@@ -33,6 +33,8 @@ export interface Logger {
 
 export interface Post {
 	selftext: string;
+	created: number;
+	name: string;
 	title: string;
 	genders: Gender[];
 }

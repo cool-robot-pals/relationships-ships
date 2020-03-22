@@ -31,7 +31,6 @@
 		"parcel": "parcel parcel/index.html",
 		"scrap": "ts-node ./bin/scrap.ts",
 		"tweet": "ts-node ./bin/make.ts && ts-node ./bin/tweet.ts",
-		"ts-node": "ts-node"
 	},
 	"repository": {
 		"type": "git",

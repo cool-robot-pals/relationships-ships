@@ -26,10 +26,11 @@
 		"typescript": "^3.8.3"
 	},
 	"scripts": {
-		"postinstall": "npm i -g ts-node typescript && ts-node ./bin/scrap/index.ts",
+		"postinstall": "npm i -g ts-node typescript && npm run scrap",
 		"test": "jest",
 		"parcel": "parcel parcel/index.html",
-		"tweet": "node ./bin/tweet.js",
+		"scrap": "ts-node ./bin/scrap.ts",
+		"tweet": "ts-node ./bin/make.ts && ts-node ./bin/tweet.ts",
 		"ts-node": "ts-node"
 	},
 	"repository": {

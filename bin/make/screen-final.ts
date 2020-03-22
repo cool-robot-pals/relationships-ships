@@ -1,5 +1,5 @@
 import config from '../../.fantarc';
-import { Snaps } from '../../code/help/types';
+import { Snaps } from '../../help/types';
 import { buildLogger, Realm } from '../help/logger';
 import { startServer } from '../help/puppet';
 import { openPage } from './../help/puppet';
